@@ -1,0 +1,18 @@
+{
+  "name": "ghostty-config",
+  "version": "1.0.0",
+  "description": "Manage Ghostty terminal config with AI-powered tools and domain knowledge",
+  "author": {
+    "name": "Chris Yuan"
+  },
+  "homepage": "https://github.com/shyuan/ghostty-config-plugin",
+  "repository": "https://github.com/shyuan/ghostty-config-plugin",
+  "license": "MIT",
+  "keywords": ["ghostty", "terminal", "config", "mcp"],
+  "mcpServers": {
+    "ghostty-config": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/dist/index.js"]
+    }
+  }
+}

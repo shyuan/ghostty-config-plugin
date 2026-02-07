@@ -1,0 +1,15 @@
+{
+  "name": "ghostty-config-dev",
+  "description": "Dev marketplace for ghostty-config plugin",
+  "owner": {
+    "name": "Chris Yuan"
+  },
+  "plugins": [
+    {
+      "name": "ghostty-config",
+      "description": "Manage Ghostty terminal config with AI-powered tools and domain knowledge",
+      "version": "1.0.0",
+      "source": "./"
+    }
+  ]
+}
