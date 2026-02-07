@@ -2,7 +2,8 @@
   "name": "ghostty-config-dev",
   "description": "Dev marketplace for ghostty-config plugin",
   "owner": {
-    "name": "Chris Yuan"
+    "name": "Chris Yuan",
+    "email": "chris.yuan@0x0.tw"
   },
   "plugins": [
     {

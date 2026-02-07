@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Manage Ghostty terminal config with AI-powered tools and domain knowledge",
   "author": {
-    "name": "Chris Yuan"
+    "name": "Chris Yuan",
+    "email": "chris.yuan@0x0.tw"
   },
   "homepage": "https://github.com/shyuan/ghostty-config-plugin",
   "repository": "https://github.com/shyuan/ghostty-config-plugin",
