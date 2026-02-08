@@ -44,6 +44,18 @@ Domain knowledge for accurate Ghostty configuration advice:
 - Standard workflows (change options, switch themes/fonts, set keybindings)
 - Common pitfalls (e.g. `scrollback-limit` is in bytes, not lines)
 
+## Quick Start Prompts
+
+After installation, try these in Claude Code:
+
+- "What is scrollback-limit?"
+- "List dark themes"
+- "What Nerd Fonts are available?"
+- "Show my current config changes"
+- "Validate my config"
+- "What keybinding opens the config file?"
+- "Pick me a fun theme and font combo"
+
 ## Requirements
 
 - [Ghostty](https://ghostty.org/) installed and available in PATH
@@ -106,6 +118,18 @@ AI 驅動的 Ghostty 終端模擬器設定管理 — 11 個 MCP 工具 + 領域�
 - 設定檔語法規則與常見陷阱
 - 標準操作流程（修改選項、切換主題/字型、設定快捷鍵）
 - 常見錯誤（例如 `scrollback-limit` 的單位是 bytes 不是行數）
+
+## 快速入門提示詞
+
+安裝完成後，在 Claude Code 中試試這些：
+
+- 「scrollback-limit 是什麼」
+- 「列出暗色主題」
+- 「有哪些 Nerd Font 可以用」
+- 「顯示我目前改了哪些設定」
+- 「驗證我的設定檔」
+- 「哪個快捷鍵可以打開設定檔」
+- 「隨便幫我找一組有趣的主題和字型組合」
 
 ## 環境需求
 
