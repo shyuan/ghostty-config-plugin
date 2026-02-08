@@ -1,80 +1,88 @@
 ---
 name: ghostty-config
 description: >
-  Manage and troubleshoot Ghostty terminal emulator configuration.
-  Triggers: customize Ghostty settings, troubleshoot Ghostty config,
-  explore Ghostty options, change Ghostty theme/font/keybindings,
-  ghostty config, ghostty 設定.
+  Use when configuring, troubleshooting, or exploring Ghostty terminal
+  settings, themes, fonts, keybindings, colors, opacity, scrollback,
+  or any Ghostty config option
 ---
 
 # Ghostty Config Management
 
+## The Iron Law
+
+```
+ALWAYS CHECK DOCS VIA MCP TOOL BEFORE GIVING CONFIG ADVICE.
+NEVER ASSUME A VALUE'S TYPE, UNIT, OR BEHAVIOR FROM ITS NAME.
+```
+
 ## Config File Location
 
 - **macOS**: `~/Library/Application Support/com.mitchellh.ghostty/config`
-- **Linux**: `$XDG_CONFIG_HOME/ghostty/config` (usually `~/.config/ghostty/config`)
+  - This path takes priority over XDG. Both can coexist, macOS path wins.
+- **Linux**: `${XDG_CONFIG_HOME:-~/.config}/ghostty/config`
 
-## Config Syntax Rules
+The config is a plain text file named `config` (no extension) inside the directory.
 
-- Format: `key = value` (spaces around `=` are optional)
-- Comments: `#` must be at the **beginning of the line** — inline comments are NOT supported
-- Empty value resets to default: `key =`
-- Multi-value options: repeat the key on separate lines (e.g. `font-family`)
-- To clear a multi-value and set a new one: first set `key = ""` then set the new value
-- Boolean values: `true` / `false`
-- Hot-reload: most settings apply immediately; some require a new window or full restart
+## Config Syntax
 
-## MCP Tools Reference
+- `key = value` — spaces around `=` optional
+- `#` comments **only at line start** — `font-size = 14 # comment` is WRONG, `# comment` becomes part of the value
+- Empty value resets to default: `font-size =`
+- Multi-value: repeat the key (e.g. `font-family` for fallback chain)
+- Clear then set: `font-family = ""` then `font-family = NewFont`
+- `keybind =` (empty) **removes ALL keybinds including defaults** — this does NOT reset to defaults
+- Use `ctrl+slash` not `ctrl+/` in keybinds — `/` is parsed as key table separator
 
-Use the `ghostty-config` MCP server tools for accurate, up-to-date information:
+## Core Workflow: Changing Any Config Option
 
-| Tool | When to Use |
-|------|------------|
-| `ghostty_search_config_docs` | User asks about config options by topic (e.g. "padding", "cursor", "scroll") |
-| `ghostty_get_config_option` | User asks about a specific config key — **always check docs before advising** |
-| `ghostty_show_current_config` | User wants to see current settings; use `changes_only=true` for modified values |
-| `ghostty_validate_config` | User reports config errors or asks to check their config |
-| `ghostty_list_fonts` | User wants to pick or check available fonts |
-| `ghostty_list_themes` | User wants to browse or switch themes |
-| `ghostty_list_actions` | User wants to set up keybindings |
-| `ghostty_list_keybinds` | User wants to see or modify keybindings |
-| `ghostty_list_colors` | User needs named color values |
-| `ghostty_show_face` | User wants to check which font renders specific characters |
-| `ghostty_version` | Check installed Ghostty version |
-
-## Standard Workflows
-
-### Changing a Config Option
-
-1. Use `ghostty_get_config_option` to read the **full docs** for the option
-2. Pay attention to the **value type and unit** (bytes, not lines!)
+1. `ghostty_get_config_option` → read full docs for the option
+2. Check the **value type and unit** — e.g. `scrollback-limit` is bytes, not lines
 3. Edit the config file
-4. Use `ghostty_validate_config` to verify
-5. Ghostty hot-reloads most settings automatically
+4. `ghostty_validate_config` → verify syntax
+5. Most settings hot-reload; theme changes with `light:X,dark:Y` syntax may need full restart on macOS
 
-### Switching Themes
+## Workflows
 
-1. `ghostty_list_themes` with optional `color="dark"` or `color="light"` filter
-2. Set `theme = <name>` in config
-3. Note: manually set colors override theme colors
+### Theme
+1. `ghostty_list_themes` — filter with `color="dark"` or `"light"`
+2. Set `theme = <name>` — manual color settings (`background`, `foreground`) override theme colors
+3. Dual theme: `theme = light:catppuccin-latte,dark:catppuccin-mocha`
+4. After changing themes, if tab bar looks wrong → restart Ghostty (known macOS reload bug)
 
-### Switching Fonts
+### Font
+1. `ghostty_list_fonts` → name must match **exactly** (case-sensitive)
+2. For fallback: repeat `font-family` on multiple lines
+3. `ghostty_show_face` → verify which font renders specific characters
+4. macOS CJK users: explicitly set a CJK font (e.g. `PingFang SC`) to avoid oversized fallback
 
-1. `ghostty_list_fonts` to browse available fonts
-2. Set `font-family = <exact name>` — name must match exactly
-3. For fallback chain, repeat `font-family` on multiple lines
-4. Use `ghostty_show_face` to verify character rendering
+### Keybind
+1. `ghostty_list_actions` → available actions
+2. `ghostty_list_keybinds` → current bindings
+3. Format: `keybind = super+shift+c=copy_to_clipboard`
+4. Chord: `keybind = ctrl+a>ctrl+b=action`
+5. Unbind: `keybind = super+c=unbind`
 
-### Setting Up Keybindings
+### Troubleshooting "Config Not Working"
 
-1. `ghostty_list_actions` to see available actions
-2. `ghostty_list_keybinds` to see current bindings
-3. Format: `keybind = modifiers+key=action:params`
-4. Modifiers: `super`, `ctrl`, `alt`, `shift` (joined with `+`)
-5. Unbind: `keybind = keys=unbind`
+1. `ghostty_validate_config` → check syntax errors
+2. `ghostty_show_current_config` with `changes_only=true` → see what's actually set
+3. Check for inline `#` comments (they become part of the value)
+4. Check for conflicting settings (manual colors override theme)
+5. Try opening a new window — some settings need new window or full restart
+6. macOS: check both config paths — macOS path takes priority over XDG
 
-## Common Gotchas
+## Red Flags — STOP and Check Docs First
 
-See `references/config-gotchas.md` for detailed pitfalls and their solutions.
+- "I know what this option does" → check anyway, units may surprise you
+- "The value should be about 10000" → is it bytes? pixels? lines? check docs
+- "This is similar to other terminals" → Ghostty syntax has unique rules
+- "Just set it to true/false" → some options use `default`, `false`, or specific enum values
 
-**Critical**: Always use `ghostty_get_config_option` to check documentation before giving advice about any config option. This prevents unit/type mistakes.
+## Critical Gotchas (Inline)
+
+- **`scrollback-limit`** = bytes, not lines. Default `10000000` = 10 MB. Setting `10000` gives only ~10 KB
+- **`background-opacity`** has color blending bugs with light themes (premultiplied alpha). Tab appearance may break on Linux
+- **`macos-titlebar-style = transparent`** silently reverts to `native` when background ≤ `#0c0c0c`
+- **Linux fractional scaling** (125%, 150%): fonts will be blurry, no config workaround
+
+See `references/config-gotchas.md` for the complete list with details and workarounds.
