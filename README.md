@@ -4,6 +4,18 @@ AI-powered Ghostty terminal configuration management — 11 MCP tools + domain k
 
 ## Installation
 
+Launch Claude Code from your Ghostty config directory and choose **local** [scope](https://code.claude.com/docs/en/settings#configuration-scopes) when prompted during installation.
+
+```bash
+# macOS
+cd ~/Library/Application\ Support/com.mitchellh.ghostty/
+
+# Linux
+cd ${XDG_CONFIG_HOME:-~/.config}/ghostty/
+
+claude
+```
+
 ### Via Marketplace (Recommended)
 
 ```bash
@@ -78,6 +90,18 @@ MIT
 AI 驅動的 Ghostty 終端模擬器設定管理 — 11 個 MCP 工具 + 領域知識 Skill。
 
 ## 安裝方式
+
+在 Ghostty 設定檔所在目錄啟動 Claude Code，安裝時選擇 **local** [scope](https://code.claude.com/docs/en/settings#configuration-scopes)。
+
+```bash
+# macOS
+cd ~/Library/Application\ Support/com.mitchellh.ghostty/
+
+# Linux
+cd ${XDG_CONFIG_HOME:-~/.config}/ghostty/
+
+claude
+```
 
 ### 透過 Marketplace 安裝（推薦）
 
