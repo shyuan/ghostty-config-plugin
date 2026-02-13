@@ -84,5 +84,6 @@ The config is a plain text file named `config` (no extension) inside the directo
 - **`background-opacity`** has color blending bugs with light themes (premultiplied alpha). Tab appearance may break on Linux
 - **`macos-titlebar-style = transparent`** silently reverts to `native` when background ≤ `#0c0c0c`
 - **Linux fractional scaling** (125%, 150%): fonts will be blurry, no config workaround
+- **`copy-on-select = true`** on macOS is effectively a no-op (no selection clipboard). Use `clipboard` to get "select to copy" on macOS
 
 See `references/config-gotchas.md` for the complete list with details and workarounds.

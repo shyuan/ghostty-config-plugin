@@ -78,6 +78,21 @@ For quick summary see the "Critical Gotchas" section in SKILL.md. This file has 
 - If colors look wrong after setting a theme, check for conflicting manual color settings.
 - Use `ghostty_show_current_config` with `changes_only=true` to see what's actually set.
 
+## copy-on-select: macOS default is effectively no-op
+
+- Default value is `true`, which means "copy to selection clipboard".
+- macOS **does not have** a selection clipboard (PRIMARY selection is a Linux/X11 concept).
+- So `copy-on-select = true` on macOS does nothing — selected text is NOT copied anywhere.
+- To get "select to copy" behavior on macOS, you must explicitly set `copy-on-select = clipboard`, which copies to the **system clipboard**.
+- `false` disables auto-copy on all platforms.
+- Middle-click paste is always enabled regardless of this setting.
+
+| Value       | macOS effect                        | Linux effect                          |
+|-------------|-------------------------------------|---------------------------------------|
+| `true`      | No-op (no selection clipboard)      | Copies to selection clipboard         |
+| `clipboard` | Copies to system clipboard          | Copies to both selection + system     |
+| `false`     | No auto-copy                        | No auto-copy                          |
+
 ## macOS dual config paths
 
 - macOS path `~/Library/Application Support/com.mitchellh.ghostty/config` takes **priority** over XDG path `~/.config/ghostty/config`.
