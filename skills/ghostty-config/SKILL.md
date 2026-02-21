@@ -87,3 +87,4 @@ The config is a plain text file named `config` (no extension) inside the directo
 - **`copy-on-select = true`** on macOS is effectively a no-op (no selection clipboard). Use `clipboard` to get "select to copy" on macOS
 
 See `references/config-gotchas.md` for the complete list with details and workarounds.
+See `references/config-recipes.md` for curated config patterns and combos (visual optimization, font tuning, macOS experience).
