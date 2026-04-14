@@ -309,6 +309,18 @@ shell-integration-features = no-cursor,sudo,title
 - `sudo` enables a wrapper to preserve terminfo when using sudo.
 - `title` lets the shell set the window title.
 
+### SSH 到遠端主機免裝 terminfo
+
+```
+shell-integration-features = ssh-terminfo,ssh-env
+```
+
+- Fixes the common `missing or unsuitable terminal: xterm-ghostty` error when SSH'ing to remote hosts that don't have Ghostty's terminfo installed.
+- `ssh-terminfo` — automatically runs the equivalent of `infocmp -x xterm-ghostty | ssh host -- tic -x -` on first connection, installing the full `xterm-ghostty` terminfo entry on the remote. This is the **preferred** option — preserves all Ghostty features (colored underlines, true color, etc.).
+- `ssh-env` — fallback for when you can't install terminfo on the remote (read-only filesystem, jump hosts, ephemeral containers). Sets `TERM=xterm-256color` on the SSH session. **Loses advanced features** like colored/styled underlines.
+- Both are **disabled by default**. Enable either or both based on your use case — listing both lets `ssh-terminfo` try first and `ssh-env` act as fallback.
+- Requires shell integration to be active (automatic for bash/zsh/fish in Ghostty).
+
 ## Linux GTK 專屬設定
 
 ### 自訂 Tab 外觀
