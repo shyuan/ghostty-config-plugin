@@ -1,6 +1,6 @@
 {
   "name": "ghostty-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manage Ghostty terminal config with AI-powered tools and domain knowledge",
   "author": {
     "name": "Chris Yuan",
